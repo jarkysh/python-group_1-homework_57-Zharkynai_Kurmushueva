@@ -1,28 +1,69 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
+import Modal from './components/UI/Modal/Modal';
+import OrderButton from './components/OrderButton/OrderButton'
+import Button from "./components/UI/Button/Button";
+import Alert from './components/UI/Alert/Alert'
+
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+    constructor(props) {
+        super(props)
+        this.state = {isModalOpen: false,
+                    isAlertOpen: false,
+
+                    }
+    }
+ openModal()
+        {
+            this.setState({isModalOpen: true})
+        }
+
+        closeModal()
+        {
+            this.setState({isModalOpen: false})
+        }
+
+    openAlert = () => {
+        this.setState({isAlertOpen: true})
+    };
+    closeAlert = () => {
+        this.setState({isAlertOpen: false})
+    };
+
+    continued = () => {
+        alert('Continue')
+    };
+
+    autoCancelAlert = () => {
+        this.showAlert();
+        if (this.state.alertCancelTime > 0) {
+            return setTimeout(this.cancelAlert, this.state.alertCancelTime)
+        }
+    };
+
+    render() {
+        const buttonRow = [
+            {btnType: 'primary', label: 'Continue', clicked: this.continued},
+            {btnType: 'danger', label: 'Close', clicked: this.cancelModal}
+        ];
+
+
+                    return (
+                <div>
+                    <button onClick={() => this.openModal()}>Open modal</button>
+                    <Modal isOpen={this.state.isModalOpen} onClose={() => this.closeModal()}>
+                        <h3>Some kinda modal title</h3>
+                        <p>This is modal content</p>
+
+
+                    </Modal>
+
+
+                </div>
+            )
+        }
+
 }
 
 export default App;
